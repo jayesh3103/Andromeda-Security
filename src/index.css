@@ -2,6 +2,16 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Hide scrollbar for Chrome, Safari and Opera */
+.scrollbar-hide {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
 /* Tour highlight effect */
 .tour-highlight {
   position: relative;
@@ -23,6 +33,47 @@
 /* Smooth transitions for theme switching */
 * {
   transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+}
+
+/* Prevent layout shift during window resize */
+.container {
+  min-width: 0;
+  width: 100%;
+}
+
+/* Ensure proper flex behavior */
+.flex-container {
+  display: flex;
+  min-width: 0;
+}
+
+.flex-item {
+  min-width: 0;
+  flex: 1;
+}
+
+/* Responsive grid improvements */
+.responsive-grid {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+}
+
+@media (max-width: 640px) {
+  .responsive-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Prevent horizontal overflow */
+.prevent-overflow {
+  overflow-x: hidden;
+  max-width: 100%;
+}
+
+/* Smooth resize transitions */
+.resize-transition {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 /* Custom scrollbar for dark mode */
