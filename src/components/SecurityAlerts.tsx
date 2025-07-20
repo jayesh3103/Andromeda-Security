@@ -71,23 +71,29 @@ export function SecurityAlerts({ alerts, onUpdateAlert }: SecurityAlertsProps) {
     <div className="space-y-6">
       {/* Header */}
       <div className="flex items-center justify-between">
-        <div className="flex items-center space-x-3">
+        <div className="flex items-center space-x-2 sm:space-x-3 min-w-0 flex-1">
           <div className="p-2 bg-red-100 dark:bg-red-900 rounded-lg">
             <Shield className="w-6 h-6 text-red-600 dark:text-red-400" />
           </div>
-          <h2 className="text-xl font-semibold text-gray-900 dark:text-white">Security Alerts</h2>
-          <span className="px-3 py-1 text-xs font-medium bg-red-100 text-red-800 rounded-full animate-pulse">
+          <div className="min-w-0 flex-1">
+            <h2 className="text-lg sm:text-xl font-semibold text-gray-900 dark:text-white truncate">Security Alerts</h2>
+          </div>
+        </div>
+        
+        <div className="flex items-center space-x-2 flex-shrink-0">
+          <span className="px-2 sm:px-3 py-1 text-xs font-medium bg-red-100 text-red-800 rounded-full animate-pulse whitespace-nowrap">
             {alertCounts.active} Active
           </span>
+          <button
+            onClick={handleExportCSV}
+            disabled={filteredAlerts.length === 0}
+            className="flex items-center space-x-1 sm:space-x-2 px-2 sm:px-4 py-2 bg-indigo-100 dark:bg-indigo-900 text-indigo-700 dark:text-indigo-300 rounded-lg hover:bg-indigo-200 dark:hover:bg-indigo-800 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            <Download className="w-3 h-3 sm:w-4 sm:h-4" />
+            <span className="text-xs sm:text-sm">Export</span>
+            <span className="hidden sm:inline">CSV</span>
+          </button>
         </div>
-        <button
-          onClick={handleExportCSV}
-          disabled={filteredAlerts.length === 0}
-          className="flex items-center space-x-2 px-4 py-2 bg-indigo-100 dark:bg-indigo-900 text-indigo-700 dark:text-indigo-300 rounded-lg hover:bg-indigo-200 dark:hover:bg-indigo-800 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-        >
-          <Download className="w-4 h-4" />
-          <span>Export CSV</span>
-        </button>
       </div>
 
       {/* Stats Cards */}
