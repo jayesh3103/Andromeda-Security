@@ -524,17 +524,21 @@ export function TransactionMonitor({ onNewAlert, onStatsUpdate, onChatbotSuggest
                         <span className={`px-1.5 sm:px-2 py-0.5 sm:py-1 text-xs font-medium rounded-full ${getClassificationColor(tx.analysis.classification)}`}>
                           {tx.analysis.classification.toUpperCase()}
                         </span>
-                        <button
-                          onClick={() => handleRiskClick(tx)}
-                          className={`px-1.5 sm:px-2 py-0.5 sm:py-1 text-xs font-medium rounded cursor-pointer hover:opacity-80 transition-opacity ${getRiskColor(tx.analysis.riskScore)}`}
-                        >
-                          Risk: {tx.analysis.riskScore}%
-                        </button>
                         {isWalletBlocked(tx.from) && (
                           <span className="px-1.5 sm:px-2 py-0.5 sm:py-1 text-xs font-medium bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-300 rounded-full animate-pulse">
                             BLOCKED WALLET
                           </span>
                         )}
+                      </div>
+                      
+                      {/* Risk Score - Moved to separate line on mobile */}
+                      <div className="mb-2">
+                        <button
+                          onClick={() => handleRiskClick(tx)}
+                          className={`px-2 py-1 text-xs font-medium rounded cursor-pointer hover:opacity-80 transition-opacity ${getRiskColor(tx.analysis.riskScore)}`}
+                        >
+                          Risk: {tx.analysis.riskScore}%
+                        </button>
                       </div>
                       
                       {viewMode === 'expanded' && (
@@ -567,50 +571,52 @@ export function TransactionMonitor({ onNewAlert, onStatsUpdate, onChatbotSuggest
                       )}
                     </div>
                     
-                    <div className="flex flex-col items-end space-y-1 min-w-0 flex-shrink-0">
-                      <div className="text-xs text-gray-500 dark:text-gray-400">
+                    {/* Right side - Block and Time info */}
+                    <div className="flex flex-col items-end justify-start space-y-1 ml-2 flex-shrink-0">
+                      <div className="text-xs text-gray-500 dark:text-gray-400 text-right">
                         Block #{tx.blockNumber}
                       </div>
-                      <div className="text-xs font-mono text-gray-500 dark:text-gray-400">
+                      <div className="text-xs font-mono text-gray-500 dark:text-gray-400 text-right">
                         {new Date(tx.timestamp).toLocaleTimeString()}
                       </div>
-                      
-                      {(tx.analysis.riskScore > 50 || tx.analysis.detectedPatterns.length > 0) && (
-                        <div className="mt-2 space-y-1">
-                          <div className="relative group">
-                            <button className="flex items-center space-x-1 px-2 py-1 text-xs bg-orange-100 dark:bg-orange-900 text-orange-700 dark:text-orange-300 rounded hover:bg-orange-200 dark:hover:bg-orange-800 transition-all whitespace-nowrap">
-                              <Settings className="w-2.5 h-2.5 sm:w-3 sm:h-3" />
-                              <span>Actions</span>
-                            </button>
-                            
-                            <div className="absolute right-0 top-full mt-1 w-36 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all z-10">
-                              <button
-                                onClick={() => handleTransactionAction(tx, 'simulate')}
-                                className="w-full px-3 py-2 text-left text-xs hover:bg-gray-50 dark:hover:bg-gray-700 flex items-center space-x-2"
-                              >
-                                <Eye className="w-3 h-3" />
-                                <span>🧪 Simulate</span>
-                              </button>
-                              <button
-                                onClick={() => handleTransactionAction(tx, 'analyze')}
-                                className="w-full px-3 py-2 text-left text-xs hover:bg-gray-50 dark:hover:bg-gray-700 flex items-center space-x-2"
-                              >
-                                <BarChart3 className="w-3 h-3" />
-                                <span>📊 Analyze</span>
-                              </button>
-                              <button
-                                onClick={() => handleTransactionAction(tx, 'explain')}
-                                className="w-full px-3 py-2 text-left text-xs hover:bg-gray-50 dark:hover:bg-gray-700 flex items-center space-x-2"
-                              >
-                                <Brain className="w-3 h-3" />
-                                <span>🧠 Explain</span>
-                              </button>
-                            </div>
-                          </div>
-                        </div>
-                      )}
                     </div>
                   </div>
+                  
+                  {/* Actions - Moved to bottom to prevent overlap */}
+                  {(tx.analysis.riskScore > 50 || tx.analysis.detectedPatterns.length > 0) && (
+                    <div className="mt-3 flex justify-end">
+                      <div className="relative group">
+                        <button className="flex items-center space-x-1 px-2 py-1 text-xs bg-orange-100 dark:bg-orange-900 text-orange-700 dark:text-orange-300 rounded hover:bg-orange-200 dark:hover:bg-orange-800 transition-all">
+                          <Settings className="w-3 h-3" />
+                          <span>Actions</span>
+                        </button>
+                        
+                        <div className="absolute right-0 top-full mt-1 w-36 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all z-10">
+                          <button
+                            onClick={() => handleTransactionAction(tx, 'simulate')}
+                            className="w-full px-3 py-2 text-left text-xs hover:bg-gray-50 dark:hover:bg-gray-700 flex items-center space-x-2"
+                          >
+                            <Eye className="w-3 h-3" />
+                            <span>🧪 Simulate</span>
+                          </button>
+                          <button
+                            onClick={() => handleTransactionAction(tx, 'analyze')}
+                            className="w-full px-3 py-2 text-left text-xs hover:bg-gray-50 dark:hover:bg-gray-700 flex items-center space-x-2"
+                          >
+                            <BarChart3 className="w-3 h-3" />
+                            <span>📊 Analyze</span>
+                          </button>
+                          <button
+                            onClick={() => handleTransactionAction(tx, 'explain')}
+                            className="w-full px-3 py-2 text-left text-xs hover:bg-gray-50 dark:hover:bg-gray-700 flex items-center space-x-2"
+                          >
+                            <Brain className="w-3 h-3" />
+                            <span>🧠 Explain</span>
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  )}
                 </div>
               ))}
             </div>
