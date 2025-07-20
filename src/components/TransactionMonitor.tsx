@@ -567,38 +567,42 @@ export function TransactionMonitor({ onNewAlert, onStatsUpdate, onChatbotSuggest
                       )}
                     </div>
                     
-                    <div className="text-right text-xs sm:text-sm text-gray-500 dark:text-gray-400">
-                      <div>Block #{tx.blockNumber}</div>
-                      <div className="font-mono text-xs">{new Date(tx.timestamp).toLocaleTimeString()}</div>
+                    <div className="flex flex-col items-end space-y-1 min-w-0 flex-shrink-0">
+                      <div className="text-xs text-gray-500 dark:text-gray-400">
+                        Block #{tx.blockNumber}
+                      </div>
+                      <div className="text-xs font-mono text-gray-500 dark:text-gray-400">
+                        {new Date(tx.timestamp).toLocaleTimeString()}
+                      </div>
                       
                       {(tx.analysis.riskScore > 50 || tx.analysis.detectedPatterns.length > 0) && (
-                        <div className="mt-1 sm:mt-2 space-y-1">
+                        <div className="mt-2 space-y-1">
                           <div className="relative group">
-                            <button className="flex items-center space-x-1 px-1.5 sm:px-2 py-0.5 sm:py-1 text-xs bg-orange-100 dark:bg-orange-900 text-orange-700 dark:text-orange-300 rounded hover:bg-orange-200 dark:hover:bg-orange-800 transition-all">
+                            <button className="flex items-center space-x-1 px-2 py-1 text-xs bg-orange-100 dark:bg-orange-900 text-orange-700 dark:text-orange-300 rounded hover:bg-orange-200 dark:hover:bg-orange-800 transition-all whitespace-nowrap">
                               <Settings className="w-2.5 h-2.5 sm:w-3 sm:h-3" />
-                              <span className="hidden sm:inline">Actions</span>
+                              <span>Actions</span>
                             </button>
                             
-                            <div className="absolute right-0 top-full mt-1 w-32 sm:w-40 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all z-10">
+                            <div className="absolute right-0 top-full mt-1 w-36 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all z-10">
                               <button
                                 onClick={() => handleTransactionAction(tx, 'simulate')}
-                                className="w-full px-2 sm:px-3 py-1.5 sm:py-2 text-left text-xs hover:bg-gray-50 dark:hover:bg-gray-700 flex items-center space-x-1 sm:space-x-2"
+                                className="w-full px-3 py-2 text-left text-xs hover:bg-gray-50 dark:hover:bg-gray-700 flex items-center space-x-2"
                               >
-                                <Eye className="w-2.5 h-2.5 sm:w-3 sm:h-3" />
+                                <Eye className="w-3 h-3" />
                                 <span>🧪 Simulate</span>
                               </button>
                               <button
                                 onClick={() => handleTransactionAction(tx, 'analyze')}
-                                className="w-full px-2 sm:px-3 py-1.5 sm:py-2 text-left text-xs hover:bg-gray-50 dark:hover:bg-gray-700 flex items-center space-x-1 sm:space-x-2"
+                                className="w-full px-3 py-2 text-left text-xs hover:bg-gray-50 dark:hover:bg-gray-700 flex items-center space-x-2"
                               >
-                                <BarChart3 className="w-2.5 h-2.5 sm:w-3 sm:h-3" />
+                                <BarChart3 className="w-3 h-3" />
                                 <span>📊 Analyze</span>
                               </button>
                               <button
                                 onClick={() => handleTransactionAction(tx, 'explain')}
-                                className="w-full px-2 sm:px-3 py-1.5 sm:py-2 text-left text-xs hover:bg-gray-50 dark:hover:bg-gray-700 flex items-center space-x-1 sm:space-x-2"
+                                className="w-full px-3 py-2 text-left text-xs hover:bg-gray-50 dark:hover:bg-gray-700 flex items-center space-x-2"
                               >
-                                <Brain className="w-2.5 h-2.5 sm:w-3 sm:h-3" />
+                                <Brain className="w-3 h-3" />
                                 <span>🧠 Explain</span>
                               </button>
                             </div>
